@@ -79,11 +79,20 @@ function startRapBattle() {
                     temperature: 0.7
                 })
             })
-            .then(response => {
+            .then(async response => {
+                const text = await response.text();  // Obter a resposta como texto para inspeção
+                console.log('Response Text:', text);  // Ver o texto da resposta no console
+            
                 if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
+                    throw new Error('Network response was not ok: ' + text);
                 }
-                return response.json();  // Tenta converter a resposta para JSON
+            
+                try {
+                    const json = JSON.parse(text);  // Tentar analisar o texto como JSON
+                    return json;
+                } catch (error) {
+                    throw new Error('Failed to parse JSON: ' + error.message);
+                }
             })
                 .then(data => {
                     console.log('API Response:', data);  // Log the entire response

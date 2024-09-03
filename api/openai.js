@@ -5,7 +5,7 @@ export default async function handler(req = NowRequest, res = NowResponse) {
     const { prompt } = req.body;
 
     try {
-        const response = await axios.post('https://api.openai.com/v1/completions', {
+        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
             model: 'gpt-3.5-turbo',
             messages: [{ role: 'user', content: prompt }],
             max_tokens: 200,
