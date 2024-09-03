@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/linalopes/CAS-M1-authors#readme",
   "dependencies": {
-    "@vercel/node": "^3.2.10",
     "typescript": "^4.9.5"
   }
 }
