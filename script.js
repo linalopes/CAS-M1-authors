@@ -48,6 +48,9 @@ function startRapBattle() {
     const author2 = document.getElementById('author2').value;
     const resultDiv = document.getElementById('rapBattleResult');
 
+    console.log('Selected Author 1:', author1);
+    console.log('Selected Author 2:', author2);
+
     if (author1 && author2) {
         const author1Data = authorData[author1];  // Ensure this pulls the correct data
         const author2Data = authorData[author2];  // Ensure this pulls the correct data
