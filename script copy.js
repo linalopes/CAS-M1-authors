@@ -48,6 +48,9 @@ function startRapBattle() {
     const author2 = document.getElementById('author2').value;
     const resultDiv = document.getElementById('rapBattleResult');
 
+    console.log('Selected Author 1:', author1);
+    console.log('Selected Author 2:', author2);
+
     if (author1 && author2) {
         const author1Data = authorData[author1];  // Ensure this pulls the correct data
         const author2Data = authorData[author2];  // Ensure this pulls the correct data
@@ -62,6 +65,7 @@ function startRapBattle() {
                 4. Finally, ${author2} concludes the battle with a last verse, possibly mentioning their own additional works like "${author2Data.otherWorks}".
                 Each part should be clearly labeled with the author's name before their verse.
             `;
+            console.log('Generated prompt:', prompt);
 
             // Make the API call to OpenAI with the prompt
             fetch('/api/openai', {
@@ -69,31 +73,9 @@ function startRapBattle() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    model: 'gpt-3.5-turbo',  // or 'gpt-4' if you want to use the GPT-4 model
-                    messages: [
-                        { role: "system", content: "You are a creative assistant that helps generate rap battle verses between important authors in the field of AI and machine learning. These authors from different times, places and backgound studies" },
-                        { role: "user", content: prompt }
-                    ],
-                    max_tokens: 350,
-                    temperature: 0.7
-                })
+                body: JSON.stringify({ prompt: prompt })
             })
-                .then(async response => {
-                    const text = await response.text();  // Obter a resposta como texto para inspeção
-                    console.log('Raw Response Text:', text);  // Ver o texto bruto da resposta no console
-
-                    if (!response.ok) {
-                        throw new Error(`Network response was not ok: ${response.status} ${response.statusText} - ${text}`);
-                    }
-
-                    try {
-                        const json = JSON.parse(text);  // Tentar analisar o texto como JSON
-                        return json;
-                    } catch (error) {
-                        throw new Error('Failed to parse JSON: ' + error.message);
-                    }
-                })
+                .then(response => response.json())
                 .then(data => {
                     console.log('API Response:', data);  // Log the entire response
                     if (data.choices && data.choices.length > 0) {
@@ -109,7 +91,7 @@ function startRapBattle() {
                     }
                 })
                 .catch(error => {
-                    console.error('There was a problem with the fetch operation:', error);
+                    console.error('Error:', error);
                     resultDiv.textContent = 'An error occurred. Please try again later.';
                 });
         } else {
