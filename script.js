@@ -73,15 +73,7 @@ function startRapBattle() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    model: 'gpt-3.5-turbo',  // or 'gpt-4' if you want to use the GPT-4 model
-                    messages: [
-                        { role: "system", content: "You are a creative assistant that helps generate rap battle verses between important authors in the field of AI and machine learning. These authors from different times, places and backgound studies" },
-                        { role: "user", content: prompt }
-                    ],
-                    max_tokens: 200,
-                    temperature: 0.7
-                })
+                body: JSON.stringify({ prompt: prompt })
             })
                 .then(response => response.json())
                 .then(data => {

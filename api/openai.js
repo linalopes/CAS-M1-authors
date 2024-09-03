@@ -14,7 +14,15 @@ export default async function handler(req, res) {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
             },
-            body: JSON.stringify({ prompt: prompt })
+            body: JSON.stringify({
+                model: 'gpt-3.5-turbo',
+                messages: [
+                    { role: "system", content: "You are a creative assistant that helps generate rap battle verses between important authors in the field of AI and machine learning." },
+                    { role: "user", content: prompt }
+                ],
+                max_tokens: 350,
+                temperature: 0.7
+            })
         });
 
         const data = await response.json();
