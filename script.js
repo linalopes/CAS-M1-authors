@@ -75,7 +75,7 @@ function startRapBattle() {
                         { role: "system", content: "You are a creative assistant that helps generate rap battle verses between important authors in the field of AI and machine learning. These authors from different times, places and backgound studies" },
                         { role: "user", content: prompt }
                     ],
-                    max_tokens: 350,
+                    max_tokens: 200,
                     temperature: 0.7
                 })
             })
