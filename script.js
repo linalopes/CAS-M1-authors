@@ -79,21 +79,21 @@ function startRapBattle() {
                     temperature: 0.7
                 })
             })
-            then(async response => {
-                const text = await response.text();  // Obter a resposta como texto para inspeção
-                console.log('Raw Response Text:', text);  // Ver o texto bruto da resposta no console
-            
-                if (!response.ok) {
-                    throw new Error(`Network response was not ok: ${response.status} ${response.statusText} - ${text}`);
-                }
-            
-                try {
-                    const json = JSON.parse(text);  // Tentar analisar o texto como JSON
-                    return json;
-                } catch (error) {
-                    throw new Error('Failed to parse JSON: ' + error.message);
-                }
-            })
+                .then(async response => {
+                    const text = await response.text();  // Obter a resposta como texto para inspeção
+                    console.log('Raw Response Text:', text);  // Ver o texto bruto da resposta no console
+
+                    if (!response.ok) {
+                        throw new Error(`Network response was not ok: ${response.status} ${response.statusText} - ${text}`);
+                    }
+
+                    try {
+                        const json = JSON.parse(text);  // Tentar analisar o texto como JSON
+                        return json;
+                    } catch (error) {
+                        throw new Error('Failed to parse JSON: ' + error.message);
+                    }
+                })
                 .then(data => {
                     console.log('API Response:', data);  // Log the entire response
                     if (data.choices && data.choices.length > 0) {
