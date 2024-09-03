@@ -5,12 +5,7 @@ function loadAuthors() {
     const googleSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1GrZpRGPTnwRBNhCDBusax9BpInPmfxkt6Y7HIGC_N-w/pub?gid=498870662&single=true&output=csv';
 
     fetch(googleSpreadsheetUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok: ' + response.statusText);
-            }
-            return response.text();
-        })
+        .then(response => response.text())
         .then(data => {
             const rows = data.split('\n').slice(1);  // Skip the header row
             const author1Select = document.getElementById('author1');
@@ -42,11 +37,7 @@ function loadAuthors() {
                 }
             });
         })
-        .catch(error => {
-            console.error('Error loading authors:', error);
-            const resultDiv = document.getElementById('rapBattleResult');
-            resultDiv.textContent = 'Failed to load authors data. Please check your internet connection or try again later.';
-        });
+        .catch(error => console.error('Error loading authors:', error));
 }
 
 // Function to validate selected authors
@@ -109,15 +100,10 @@ function startRapBattle() {
         },
         body: JSON.stringify({ prompt: prompt })
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('API response was not ok: ' + response.statusText);
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
-            hideLoadingIndicator();  // Hide loading indicator when data is received
             console.log('API Response:', data);
+            hideLoadingIndicator();  // Hide loading indicator when data is received
             if (data.choices && data.choices.length > 0) {
                 let battleText = data.choices[0].message.content;
 
@@ -127,17 +113,13 @@ function startRapBattle() {
 
                 resultDiv.innerHTML = `<h3>${author1} vs. ${author2}</h3><p>${battleText}</p>`;
             } else {
-                resultDiv.textContent = 'The AI did not return a valid response. Please try again later.';
+                resultDiv.textContent = 'No valid response from the API. Please try again later.';
             }
         })
         .catch(error => {
-            console.error('Error during API call:', error);
+            console.error('Error:', error);
             hideLoadingIndicator();  // Hide loading indicator on error
-            if (error.message.includes('Network response was not ok')) {
-                resultDiv.textContent = 'Failed to connect to the API. Please check your internet connection or try again later.';
-            } else {
-                resultDiv.textContent = 'An error occurred while processing your request. Please try again later.';
-            }
+            resultDiv.textContent = 'An error occurred. Please try again later.';
         });
 }
 
