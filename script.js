@@ -95,7 +95,7 @@ function startRapBattle() {
                     }
                 })
                 .catch(error => {
-                    console.error('Error:', error);
+                    onsole.error('There was a problem with the fetch operation:', error);
                     resultDiv.textContent = 'An error occurred. Please try again later.';
                 });
         } else {
