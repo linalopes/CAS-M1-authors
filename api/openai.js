@@ -19,6 +19,9 @@ export default async function handler(req = NowRequest, res = NowResponse) {
         res.status(200).json(response.data);
     } catch (error) {
         console.error('Error calling OpenAI API:', error);
-        res.status(500).json({ error: 'Failed to fetch from OpenAI API' });
+        res.status(500).json({
+            error: 'Failed to fetch from OpenAI API',
+            details: error.message
+        });
     }
 }
