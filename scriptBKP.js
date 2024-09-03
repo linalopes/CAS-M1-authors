@@ -64,11 +64,10 @@ function startRapBattle() {
             `;
 
             // Make the API call to OpenAI with the prompt
-            fetch('https://api.openai.com/v1/chat/completions', {
+            fetch('/api/openai', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
                 },
                 body: JSON.stringify({
                     model: 'gpt-3.5-turbo',  // or 'gpt-4' if you want to use the GPT-4 model
@@ -80,7 +79,21 @@ function startRapBattle() {
                     temperature: 0.7
                 })
             })
-                .then(response => response.json())
+                .then(async response => {
+                    const text = await response.text();  // Obter a resposta como texto para inspeção
+                    console.log('Raw Response Text:', text);  // Ver o texto bruto da resposta no console
+
+                    if (!response.ok) {
+                        throw new Error(`Network response was not ok: ${response.status} ${response.statusText} - ${text}`);
+                    }
+
+                    try {
+                        const json = JSON.parse(text);  // Tentar analisar o texto como JSON
+                        return json;
+                    } catch (error) {
+                        throw new Error('Failed to parse JSON: ' + error.message);
+                    }
+                })
                 .then(data => {
                     console.log('API Response:', data);  // Log the entire response
                     if (data.choices && data.choices.length > 0) {
@@ -96,7 +109,7 @@ function startRapBattle() {
                     }
                 })
                 .catch(error => {
-                    console.error('Error:', error);
+                    console.error('There was a problem with the fetch operation:', error);
                     resultDiv.textContent = 'An error occurred. Please try again later.';
                 });
         } else {
