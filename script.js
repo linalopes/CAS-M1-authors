@@ -64,11 +64,10 @@ function startRapBattle() {
             `;
 
             // Make the API call to OpenAI with the prompt
-            fetch('https://api.openai.com/v1/chat/completions', {
+            fetch('/api/openai', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
                 },
                 body: JSON.stringify({
                     model: 'gpt-3.5-turbo',  // or 'gpt-4' if you want to use the GPT-4 model
