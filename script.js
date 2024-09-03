@@ -62,6 +62,7 @@ function startRapBattle() {
                 4. Finally, ${author2} concludes the battle with a last verse, possibly mentioning their own additional works like "${author2Data.otherWorks}".
                 Each part should be clearly labeled with the author's name before their verse.
             `;
+            console.log('Generated prompt:', prompt);
 
             // Make the API call to OpenAI with the prompt
             fetch('/api/openai', {
