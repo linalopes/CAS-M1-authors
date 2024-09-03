@@ -84,7 +84,7 @@ function startRapBattle() {
                 console.log('Response Text:', text);  // Ver o texto da resposta no console
             
                 if (!response.ok) {
-                    throw new Error('Network response was not ok: ' + text);
+                    throw new Error(`Network response was not ok: ${response.status} ${response.statusText} - ${text}`);
                 }
             
                 try {
