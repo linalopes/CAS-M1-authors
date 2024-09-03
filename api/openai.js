@@ -28,24 +28,12 @@ module.exports = async (req, res) => {
         });
 
         apiRes.on('end', () => {
-            console.log('API Response:', responseData);
             try {
-                const parsedData = JSON.parse(responseData);
-                if (parsedData.choices && parsedData.choices.length > 0) {
-                    res.status(200).json(parsedData);
-                } else {
-                    console.error('No valid response from the API:', parsedData);
-                    res.status(500).json({
-                        error: 'No valid response from the API',
-                        details: parsedData
-                    });
-                }
+                const jsonResponse = JSON.parse(responseData);  // Tenta analisar o JSON
+                res.status(200).json(jsonResponse);
             } catch (error) {
-                console.error('Failed to parse API response:', error, responseData);
-                res.status(500).json({
-                    error: 'Failed to parse API response',
-                    details: error.message
-                });
+                console.error('Error parsing JSON response:', error);
+                res.status(500).json({ error: 'Failed to parse JSON from OpenAI', details: error.message });
             }
         });
     });

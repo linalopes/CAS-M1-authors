@@ -79,9 +79,9 @@ function startRapBattle() {
                     temperature: 0.7
                 })
             })
-            .then(async response => {
+            then(async response => {
                 const text = await response.text();  // Obter a resposta como texto para inspeção
-                console.log('Response Text:', text);  // Ver o texto da resposta no console
+                console.log('Raw Response Text:', text);  // Ver o texto bruto da resposta no console
             
                 if (!response.ok) {
                     throw new Error(`Network response was not ok: ${response.status} ${response.statusText} - ${text}`);
