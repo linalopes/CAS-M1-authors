@@ -79,7 +79,12 @@ function startRapBattle() {
                     temperature: 0.7
                 })
             })
-                .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();  // Tenta converter a resposta para JSON
+            })
                 .then(data => {
                     console.log('API Response:', data);  // Log the entire response
                     if (data.choices && data.choices.length > 0) {
