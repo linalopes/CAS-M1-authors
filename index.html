@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rap Battle Between Authors</title>
     <link rel="icon" type="image/x-icon" href="favicon.png">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -13,7 +14,7 @@
     </header>
 
     <!-- Motivation Section -->
-    <section id="about-page" class="pt-4">
+    <section class="pt-4 col-md-8 col-sm-12 mx-auto pb-4">
         <p>
             This page showcases a unique "rap battle" between authors, inspired by the references gathered during the Module 1 of the <strong>Certificate for Advanced Studies in AI for Creative Practices</strong>, taught by Professor Chris Salter from ZHdK, Zurich University of Art and Design. Over the course of three immersive days, we delved into the foundations of Artificial Intelligence and Machine Learning. The 74 authors featured in this battle are key figures whose works were studied during the module.
         <p>
@@ -28,36 +29,51 @@
     </section>
 
     <!-- Dropdowns for Author Selection -->
-    <section class="battle-section">
-        <div>
-            <label for="author1">Choose Author 1:</label>
-            <select id="author1">
-                <!-- Options will be populated by JavaScript -->
-            </select>
-        </div>
-        <div class="pb-1">
-            <label for="author2">Choose Author 2:</label>
-            <select id="author2">
-                <!-- Options will be populated by JavaScript -->
-            </select>
-        </div>
-        <div class="author-info">
-            <!-- Coluna esquerda: Informações do Autor 1 -->
-            <div id="author1-info" class="author-column">
-                <h3>Author 1 Information</h3>
-                <p id="author1-bio">Select an author to see their bio.</p>
+    <section>
+        <div class="container">
+            <div class="row">
+                <!-- Coluna do Autor 1 -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="author1">Choose Author 1:</label>
+                        <select id="author1" class="form-control">
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="author-info">
+                        <p id="author1-bio">Select an author to see their bio.</p>
+                    </div>
+                </div>
+        
+                <!-- Coluna do Autor 2 -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="author2">Choose Author 2:</label>
+                        <select id="author2" class="form-control">
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="author-info">
+                        <p id="author2-bio">Select an author to see their bio.</p>
+                    </div>
+                </div>
             </div>
-            
-            <!-- Coluna direita: Informações do Autor 2 -->
-            <div id="author2-info" class="author-column">
-                <h3>Author 2 Information</h3>
-                <p id="author2-bio">Select an author to see their bio.</p>
+        
+            <!-- Botão para iniciar a batalha -->
+            <div class="row mt-4">
+                <div class="col text-center">
+                    <button id="battleButton" class="button">Start Rap Battle</button>
+                </div>
+            </div>
+        
+            <!-- Resultado da batalha -->
+            <div class="row mt-4">
+                <div class="col">
+                    <div id="rapBattleResult" class="bg-light p-3"></div>
+                </div>
             </div>
         </div>
-        <button id="battleButton">Start Rap Battle</button>
-        <div id="rapBattleResult">
-            <!-- Result of the rap battle will be displayed here -->
-        </div>
+    
     </section>
 
     <script src="script.js"></script>

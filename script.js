@@ -64,20 +64,16 @@ function updateAuthorInfo() {
     if (author1 && authorData[author1]) {
         const author1Bio = authorData[author1].miniBio || "No bio available.";
         author1BioElement.textContent = author1Bio;
-        author1InfoTitle.style.display = "none"; // Hide the title when bio is loaded
     } else {
         author1BioElement.textContent = "Select an author to see their bio.";
-        author1InfoTitle.style.display = "block"; // Show the title if no bio is loaded
     }
 
     // Update the bio of Author 2
     if (author2 && authorData[author2]) {
         const author2Bio = authorData[author2].miniBio || "No bio available.";
         author2BioElement.textContent = author2Bio;
-        author2InfoTitle.style.display = "none"; // Hide the title when bio is loaded
     } else {
         author2BioElement.textContent = "Select an author to see their bio.";
-        author2InfoTitle.style.display = "block"; // Show the title if no bio is loaded
     }
 }
 
