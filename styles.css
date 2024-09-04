@@ -39,8 +39,8 @@ h3 {
   }
 
 p, ul, li, ol {
-    line-height: 1.5;
-    margin-bottom: 0;
+    line-height: 1.8;
+    margin-bottom: 1rem;
     text-align: left; /* Alinhamento à esquerda */
     margin-left: auto;
     margin-right: auto;
