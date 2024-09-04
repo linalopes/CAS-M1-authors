@@ -83,10 +83,21 @@ function startRapBattle() {
     const author2 = document.getElementById('author2').value;
     const resultDiv = document.getElementById('rapBattleResult');
 
+    // Clear previous error messages
+    resultDiv.innerHTML = '';
+
     // Input validation
     if (!author1 || !author2) {
-        resultDiv.textContent = 'Please select both authors before starting the battle.';
-        return;
+        resultDiv.innerHTML = '<p style="color: red;">Please select both authors before starting the battle.</p>';
+        
+        // Add focus to the first empty field
+        if (!author1) {
+            document.getElementById('author1').focus();
+        } else if (!author2) {
+            document.getElementById('author2').focus();
+        }
+        
+        return; // Stop the function from proceeding further
     }
 
     // Show loading indicator

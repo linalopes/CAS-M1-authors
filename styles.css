@@ -65,7 +65,7 @@ button {
     font-size: 16px;
     cursor: pointer;
     background-color: var(--pink);
-    color: var(--turquoise);
+    color: var(--deep-purple);
     border: none;
     border-radius: 5px;
     transition: background-color 0.3s, transform 0.2s; /* Adicionando transição suave */
