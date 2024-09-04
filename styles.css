@@ -85,9 +85,20 @@ button:hover {
 #rapBattleResult {
     margin-top: 20px;
     padding: 20px;
-    border: 1px solid #ccc;
     background-color: var(--gray-green);
-    min-height: 100px;
+    color: var(--deep-purple);
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    text-align: center; /* Alinhamento central do texto */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 800px; /* Limita a largura para legibilidade */
+    margin-left: auto;
+    margin-right: auto;
+    white-space: pre-wrap; /* Mantém as quebras de linha */
 }
 
 /* Flexbox para melhor responsividade */
