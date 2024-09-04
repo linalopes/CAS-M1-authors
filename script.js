@@ -81,9 +81,69 @@ function updateAuthorInfo() {
     }
 }
 
+// Function to start the rap battle by generating a prompt and calling OpenAI API
+function startRapBattle() {
+    const author1 = document.getElementById('author1').value;
+    const author2 = document.getElementById('author2').value;
+    const resultDiv = document.getElementById('rapBattleResult');
+
+    // Input validation
+    if (!author1 || !author2) {
+        resultDiv.textContent = 'Please select both authors before starting the battle.';
+        return;
+    }
+
+    // Show loading indicator
+    resultDiv.innerHTML = '<p>Loading battle...</p>';
+
+    const author1Data = authorData[author1];
+    const author2Data = authorData[author2];
+
+    // Construct the prompt for OpenAI
+    const prompt = `
+        Imagine ${author1} and ${author2} are having a rap battle. 
+        The battle should have four parts:
+        1. ${author1} starts by boasting about their work "${author1Data.notableWork}" and criticizing ${author2}'s work "${author2Data.notableWork}".
+        2. ${author2} responds by boasting about their work "${author2Data.notableWork}" and criticizing ${author1}'s work "${author1Data.notableWork}".
+        3. ${author1} replies with another verse, making references to other works.
+        4. Finally, ${author2} concludes the battle with a last verse.
+        Each part should be clearly labeled with the author's name before their verse.
+    `;
+    
+    // Call the OpenAI API
+    fetch('/api/openai', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt: prompt })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.choices && data.choices.length > 0) {
+            let battleText = data.choices[0].message.content;
+
+            // Format the response text
+            battleText = battleText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            battleText = battleText.replace(/\n/g, '<br>'); // Replace newlines with <br> tags for line breaks
+
+            resultDiv.innerHTML = `<h3>${author1} vs. ${author2}</h3><p>${battleText}</p>`;
+        } else {
+            resultDiv.textContent = 'The AI did not return a valid response. Please try again later.';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        resultDiv.textContent = 'An error occurred. Please try again later.';
+    });
+}
+
 // Add event listener to update bios when an author is selected
 document.getElementById('author1').addEventListener('change', updateAuthorInfo);
 document.getElementById('author2').addEventListener('change', updateAuthorInfo);
+
+// Add event listener to start rap battle when button is clicked
+document.getElementById('battleButton').addEventListener('click', startRapBattle);
 
 // Load authors when the page loads
 window.onload = function() {
