@@ -77,11 +77,6 @@ button:hover {
     transform: scale(1.05); /* Suave aumento de tamanho no hover */
 }
 
-#about-page {
-    text-align: left; /* Alinhamento à esquerda */
-    margin-bottom: 40px; /* Espaçamento maior entre seções */
-}
-
 #rapBattleResult {
     margin-top: 20px;
     padding: 20px;
