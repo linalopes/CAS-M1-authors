@@ -90,6 +90,53 @@ button:hover {
     min-height: 100px;
 }
 
+/* Flexbox para melhor responsividade */
+.battle-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px; /* Espaçamento maior entre as seções */
+}
+
+.battle-section div {
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+}
+
+/* Estilo para as informações dos autores */
+.author-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 40px; /* Espaçamento entre os dois blocos */
+}
+
+.author-column {
+    flex: 1;
+    padding: 10px;
+    background-color: var(--gray-green);
+    min-height: 150px;
+}
+
+.author-column p {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--deep-purple);
+    white-space: pre-wrap; /* Respeita as quebras de linha */
+    overflow: visible; /* Garante que o texto seja exibido sem ser cortado */
+}
+
+/* Remover bordas e cantos arredondados */
+.author-column {
+    border: none;
+    border-radius: 0; /* Remove os cantos arredondados */
+}
+
+
+
 /* Font styles */
 .font-title {
     font-family: 'Space Grotesk', sans-serif;

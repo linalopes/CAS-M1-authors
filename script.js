@@ -17,16 +17,16 @@ function loadAuthors() {
             const author2Select = document.getElementById('author2');
 
             rows.forEach(row => {
-                const columns = row.split(',');  // Split row into columns
-                const author = columns[0].trim();  // First column: Author name
+                const columns = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);  // Split row respecting commas inside quotes
+                const author = columns[0]?.trim();  // First column: Author name
                 const notableWork = columns[1]?.trim();  // Second column: Notable Work
-                const otherWorks = columns[4]?.trim();  // Fifth column: Books, Papers, Artwork
+                const miniBio = columns[9]?.trim();  // Tenth column: Mini Bio
 
                 if (author) {
                     // Store the data in a dictionary
                     authorData[author] = {
                         notableWork: notableWork || "No notable work available",
-                        otherWorks: otherWorks || "No additional works available"
+                        miniBio: miniBio || "No bio available"
                     };
 
                     // Add options to both select elements
@@ -49,99 +49,44 @@ function loadAuthors() {
         });
 }
 
-// Function to validate selected authors
-function validateAuthors(author1, author2) {
-    if (!author1 || !author2) {
-        return false;  // Invalid selection
-    }
-    if (!authorData[author1] || !authorData[author2]) {
-        return false;  // Author data not found
-    }
-    return true;  // Valid selection
-}
-
-// Function to show loading indicator
-function showLoadingIndicator() {
-    const resultDiv = document.getElementById('rapBattleResult');
-    resultDiv.innerHTML = '<p>Loading...</p>';
-}
-
-// Function to hide loading indicator
-function hideLoadingIndicator() {
-    const resultDiv = document.getElementById('rapBattleResult');
-    resultDiv.innerHTML = '';  // Clear loading text
-}
-
-// Function to start the rap battle
-function startRapBattle() {
+// Function to update selected authors' information
+function updateAuthorInfo() {
     const author1 = document.getElementById('author1').value;
     const author2 = document.getElementById('author2').value;
-    const resultDiv = document.getElementById('rapBattleResult');
 
-    // Input validation
-    if (!validateAuthors(author1, author2)) {
-        resultDiv.textContent = 'Invalid author selection. Please choose valid authors.';
-        return;
+    const author1BioElement = document.getElementById('author1-bio');
+    const author2BioElement = document.getElementById('author2-bio');
+
+    const author1InfoTitle = document.querySelector('#author1-info h3');
+    const author2InfoTitle = document.querySelector('#author2-info h3');
+
+    // Update the bio of Author 1
+    if (author1 && authorData[author1]) {
+        const author1Bio = authorData[author1].miniBio || "No bio available.";
+        author1BioElement.textContent = author1Bio;
+        author1InfoTitle.style.display = "none"; // Hide the title when bio is loaded
+    } else {
+        author1BioElement.textContent = "Select an author to see their bio.";
+        author1InfoTitle.style.display = "block"; // Show the title if no bio is loaded
     }
 
-    // Show loading indicator
-    showLoadingIndicator();
-
-    const author1Data = authorData[author1];
-    const author2Data = authorData[author2];
-
-    const prompt = `
-        Imagine ${author1} and ${author2} are having a rap battle. 
-        The battle should have four parts:
-        1. ${author1} starts by boasting about their work "${author1Data.notableWork}" and criticizing ${author2}'s work "${author2Data.notableWork}".
-        2. ${author2} responds by boasting about their work "${author2Data.notableWork}" and criticizing ${author1}'s work "${author1Data.notableWork}".
-        3. ${author1} replies with another verse, making references to other works such as "${author1Data.otherWorks}".
-        4. Finally, ${author2} concludes the battle with a last verse, possibly mentioning their own additional works like "${author2Data.otherWorks}".
-        Each part should be clearly labeled with the author's name before their verse.
-    `;
-    console.log('Generated prompt:', prompt);
-
-    // Make the API call to OpenAI with the prompt
-    fetch('/api/openai', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ prompt: prompt })
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('API response was not ok: ' + response.statusText);
-            }
-            return response.json();
-        })
-        .then(data => {
-            hideLoadingIndicator();  // Hide loading indicator when data is received
-            console.log('API Response:', data);
-            if (data.choices && data.choices.length > 0) {
-                let battleText = data.choices[0].message.content;
-
-                // Format the response text
-                battleText = battleText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                battleText = battleText.replace(/\n/g, '<br>'); // Replace newlines with <br> tags for line breaks
-
-                resultDiv.innerHTML = `<h3>${author1} vs. ${author2}</h3><p>${battleText}</p>`;
-            } else {
-                resultDiv.textContent = 'The AI did not return a valid response. Please try again later.';
-            }
-        })
-        .catch(error => {
-            console.error('Error during API call:', error);
-            hideLoadingIndicator();  // Hide loading indicator on error
-            if (error.message.includes('Network response was not ok')) {
-                resultDiv.textContent = 'Failed to connect to the API. Please check your internet connection or try again later.';
-            } else {
-                resultDiv.textContent = 'An error occurred while processing your request. Please try again later.';
-            }
-        });
+    // Update the bio of Author 2
+    if (author2 && authorData[author2]) {
+        const author2Bio = authorData[author2].miniBio || "No bio available.";
+        author2BioElement.textContent = author2Bio;
+        author2InfoTitle.style.display = "none"; // Hide the title when bio is loaded
+    } else {
+        author2BioElement.textContent = "Select an author to see their bio.";
+        author2InfoTitle.style.display = "block"; // Show the title if no bio is loaded
+    }
 }
 
-document.getElementById('battleButton').addEventListener('click', startRapBattle);
+// Add event listener to update bios when an author is selected
+document.getElementById('author1').addEventListener('change', updateAuthorInfo);
+document.getElementById('author2').addEventListener('change', updateAuthorInfo);
 
-// Load the authors when the page loads
-window.onload = loadAuthors;
+// Load authors when the page loads
+window.onload = function() {
+    loadAuthors(); // Load the authors from Google Spreadsheet
+    updateAuthorInfo(); // Update the bios on page load
+};

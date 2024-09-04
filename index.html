@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rap Battle Between Authors</title>
+    <link rel="icon" type="image/x-icon" href="favicon.png">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -39,6 +40,19 @@
             <select id="author2">
                 <!-- Options will be populated by JavaScript -->
             </select>
+        </div>
+        <div class="author-info">
+            <!-- Coluna esquerda: Informações do Autor 1 -->
+            <div id="author1-info" class="author-column">
+                <h3>Author 1 Information</h3>
+                <p id="author1-bio">Select an author to see their bio.</p>
+            </div>
+            
+            <!-- Coluna direita: Informações do Autor 2 -->
+            <div id="author2-info" class="author-column">
+                <h3>Author 2 Information</h3>
+                <p id="author2-bio">Select an author to see their bio.</p>
+            </div>
         </div>
         <button id="battleButton">Start Rap Battle</button>
         <div id="rapBattleResult">
