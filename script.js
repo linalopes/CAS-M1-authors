@@ -80,6 +80,13 @@ function updateAuthorInfo() {
     } else {
         author2BioElement.textContent = "Select an author to see their bio.";
     }
+
+    // Atualiza o gráfico de bolhas com os autores selecionados
+    if (typeof updateSelectedAuthors === 'function') {
+        updateSelectedAuthors(author1, author2);  // Função que atualiza o gráfico de bolhas
+    } else {
+        console.error("Function updateSelectedAuthors is not defined");
+    }
 }
 
 // Debounce function to avoid calling the function too many times in quick succession

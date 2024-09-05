@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <header>
         <h1 class="py-4">Authors Rap Battle</h1>
@@ -16,15 +18,27 @@
     <!-- Motivation Section -->
     <section class="pt-4 col-md-8 col-sm-12 mx-auto pb-4">
         <p>
-            This page showcases a unique "rap battle" between authors, inspired by the references gathered during the Module 1 of the <strong>Certificate for Advanced Studies in AI for Creative Practices</strong>, taught by Professor Chris Salter from ZHdK, Zurich University of Art and Design. Over the course of three immersive days, we delved into the foundations of Artificial Intelligence and Machine Learning. The 74 authors featured in this battle are key figures whose works were studied during the module.
+            This page showcases a unique "rap battle" between authors, inspired by the references gathered during the
+            Module 1 of the <strong>Certificate for Advanced Studies in AI for Creative Practices</strong>, taught by
+            Professor Chris Salter from ZHdK, Zurich University of Art and Design. Over the course of three immersive
+            days, we delved into the foundations of Artificial Intelligence and Machine Learning. The 74 authors
+            featured in this battle are key figures whose works were studied during the module.
         <p>
-            This course explored the genealogies of AI, covering how the field began and what Artificial Intelligence and Machine Learning mean today. From their symbolic roots in the 20th century to modern applications in the 21st century, this page is a playful exploration of the ideas and personalities that shaped AI and Machine Learning. The authors mentioned fall into three major AI categories: Symbolic AI, Connectionist AI, and a third area Enactive AI, which studies the "embodiment" of AI with human cognition and the environment.
+            This course explored the genealogies of AI, covering how the field began and what Artificial Intelligence
+            and Machine Learning mean today. From their symbolic roots in the 20th century to modern applications in the
+            21st century, this page is a playful exploration of the ideas and personalities that shaped AI and Machine
+            Learning. The authors mentioned fall into three major AI categories: Symbolic AI, Connectionist AI, and a
+            third area Enactive AI, which studies the "embodiment" of AI with human cognition and the environment.
         </p>
         <p>
-            My role in this was to compile a comprehensive list of references mentioned throughout the course and categorize them based on their theoretical contexts. This rap battle is an interactive way to engage with their contributions.
+            My role in this was to compile a comprehensive list of references mentioned throughout the course and
+            categorize them based on their theoretical contexts. This rap battle is an interactive way to engage with
+            their contributions.
         </p>
         <p>
-            I'm <a href="https://www.linalopes.info/" target="_blank">Lina Lopes</a>, a student of this Certificate program, and this project is an artistic exploration of the intersections between AI and human creativity. I hope you enjoy!
+            I'm <a href="https://www.linalopes.info/" target="_blank">Lina Lopes</a>, a student of this Certificate
+            program, and this project is an artistic exploration of the intersections between AI and human creativity. I
+            hope you enjoy!
         </p>
     </section>
 
@@ -44,7 +58,7 @@
                         <p id="author1-bio">Select an author to see their bio.</p>
                     </div>
                 </div>
-        
+
                 <!-- Coluna do Autor 2 -->
                 <div class="col-md-6">
                     <div class="form-group">
@@ -58,14 +72,15 @@
                     </div>
                 </div>
             </div>
-        
+
             <!-- Botão para iniciar a batalha -->
             <div class="row mt-4">
                 <div class="col text-center">
-                    <button id="battleButton" class="button" aria-label="Start the rap battle between selected authors">Start Rap Battle</button>
+                    <button id="battleButton" class="button"
+                        aria-label="Start the rap battle between selected authors">Start Rap Battle</button>
                 </div>
             </div>
-        
+
             <!-- Resultado da batalha -->
             <div class="row mt-4">
                 <div class="col">
@@ -73,9 +88,18 @@
                 </div>
             </div>
         </div>
-    
+    </section>
+    <!-- Adicione este script após a seção Battle Rap -->
+    <section id="bubbleChart">
+        <h3>Authors Bubble Chart</h3>
+        <div id="chart"></div>
     </section>
 
+    <!-- Incluir o script d3.js e o seu arquivo JS separado -->
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://d3js.org/d3-fetch.v1.min.js"></script> <!-- Para carregar CSV -->
+    <script src="dataviz.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
