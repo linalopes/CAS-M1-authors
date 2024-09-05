@@ -45,6 +45,10 @@ function updateSelectedAuthors(author1, author2) {
         console.error("Função updateChart ainda não foi definida.");
     }
 }
+// Função para gerar um valor de jitter (deslocamento) leve
+function jitter(value, range) {
+    return value + (Math.random() - 0.5) * range;  // Gera um deslocamento aleatório dentro do intervalo fornecido
+}
 
 // Função para atualizar o gráfico com os autores selecionados
 function updateChart() {
@@ -60,8 +64,8 @@ function updateChart() {
     const circles = svg.selectAll("circle")
         .data(data)
         .join("circle")
-        .attr("cx", d => x(d.startYear))  // Ajusta o eixo X com o ano de início
-        .attr("cy", d => y(d.location))  // Localização no eixo Y
+        .attr("cx", d => jitter(x(d.startYear), 20))  // Adiciona jitter no eixo X
+        .attr("cy", d => jitter(y(d.location), 20))  // Adiciona jitter no eixo Y
         .attr("r", d => size(d.duration))  // Tamanho da bolha baseado na duração
         .attr("fill", d => color(d['gender of the author']))  // Cor da bolha baseado no gênero
         .attr("stroke", d => selectedAuthors.includes(d.author) ? "black" : "lightgray")  // Stroke preto para autores selecionados, cinza claro para os demais
