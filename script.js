@@ -45,7 +45,12 @@ function loadAuthors() {
         .catch(error => {
             console.error('Error loading authors:', error);
             const resultDiv = document.getElementById('rapBattleResult');
-            resultDiv.textContent = 'Failed to load authors data. Please check your internet connection or try again later.';
+            resultDiv.innerHTML = `
+                <p style="color: red;">
+                    Failed to load authors data. Please check your internet connection or try again later.
+                </p>
+                <button onclick="loadAuthors()">Retry Loading Authors</button>
+            `;
         });
 }
 
