@@ -82,6 +82,23 @@ function updateAuthorInfo() {
     }
 }
 
+// Debounce function to avoid calling the function too many times in quick succession
+function debounce(func, wait) {
+    let timeout;
+    return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+}
+
+// Update author info with a debounce to optimize performance
+const updateAuthorInfoDebounced = debounce(updateAuthorInfo, 300);
+
+// Add event listener to update bios when an author is selected with debounce
+document.getElementById('author1').addEventListener('change', updateAuthorInfoDebounced);
+document.getElementById('author2').addEventListener('change', updateAuthorInfoDebounced);
+
+
 // Function to start the rap battle by generating a prompt and calling OpenAI API
 function startRapBattle() {
     const author1 = document.getElementById('author1').value;
