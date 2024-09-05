@@ -72,7 +72,7 @@ function updateChart() {
             // Tooltip com informações
             const tooltip = d3.select("#chart").append("div")
                 .attr("class", "tooltip")
-                .html(`<strong>${d.author}</strong><br>Research Duration: ${d.duration} years<br>Location: ${d.location}`)
+                .html(`<strong>${d.author}</strong><br>${d['Key Contribution']}<br>${d['city-country']}`)
                 .style("left", (event.pageX + 5) + "px")
                 .style("top", (event.pageY - 28) + "px")
                 .style("opacity", 0.9);
