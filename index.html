@@ -73,7 +73,7 @@
                 </div>
             </div>
 
-            <!-- Botão para iniciar a batalha -->
+            <!-- Button to start battle -->
             <div class="row mt-4">
                 <div class="col text-center">
                     <button id="battleButton" class="button"
@@ -81,7 +81,7 @@
                 </div>
             </div>
 
-            <!-- Resultado da batalha -->
+            <!-- Battle result -->
             <div class="row mt-4">
                 <div class="col">
                     <div id="rapBattleResult" class="bg-light p-3"></div>
@@ -89,16 +89,17 @@
             </div>
         </div>
     </section>
-    <!-- Adicione este script após a seção Battle Rap -->
+
+    <!-- Bubble Graph of the Authors -->
     <section id="bubbleChart" class="pt-4 col-12">
         <p>If you are using your phone, turn it 90 degrees to better visualize the chart</p>
         <p>The size of the circles are related with the amount of the years of the author dedicated to the research</p>
         <div id="chart"></div>
     </section>
 
-    <!-- Incluir o script d3.js e o seu arquivo JS separado -->
+    <!-- Include d3.js script for dataviz -->
     <script src="https://d3js.org/d3.v6.min.js"></script>
-    <script src="https://d3js.org/d3-fetch.v1.min.js"></script> <!-- Para carregar CSV -->
+    <script src="https://d3js.org/d3-fetch.v1.min.js"></script> <!-- To load CSV -->
     <script src="dataviz.js"></script>
     <script src="script.js"></script>
 </body>

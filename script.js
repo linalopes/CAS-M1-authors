@@ -2,7 +2,7 @@
 let authorData = {};
 
 function loadAuthors() {
-    const googleSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1GrZpRGPTnwRBNhCDBusax9BpInPmfxkt6Y7HIGC_N-w/pub?gid=498870662&single=true&output=csv';
+    const googleSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQqCdcwLemmOhO16KOVWabBRabqQoRwx1QqIyS0mxZWq_O5dxYALM4JrZDu_LUoulbRQS6137gCsmJc/pub?gid=498870662&single=true&output=csv';
 
     fetch(googleSpreadsheetUrl)
         .then(response => {

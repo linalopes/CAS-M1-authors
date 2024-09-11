@@ -1,9 +1,35 @@
-// Configurações gerais do gráfico (ajustando para ser responsivo)
+// ABOUT THE DATASET
+// The dataset consists of 74 key authors who have made significant contributions to Artificial Intelligence (AI) and Machine Learning (ML).
+// These authors were referenced during Module 1 of the CAS AI for Creative Practices, focusing on the genealogy of AI. 
+// The data reveals the intellectual profiles and geographical distribution of the authors, highlighting important socio-technical aspects 
+// such as gender, location, and the duration of their research careers.
+// Visualizing this data allows us to better understand the intellectual landscape that has shaped the field of AI and ML.
+
+
+// D3.js LIBRARY
+// This code uses D3.js, a powerful JavaScript library for producing dynamic, interactive data visualizations in web browsers.
+// D3.js (Data-Driven Documents) was created in 2011 by Mike Bostock (New York Times and Stanford - USA) and is widely used for creating 
+// complex visualizations in web browsers. It is an open-source library that binds data to a Document Object Model (DOM) and applies 
+// data-driven transformations to the document, allowing the creation of dynamic charts.
+// Since it is open-source, the code can be adapted and expanded by developers globally. However, like any tool, it carries the biases 
+// of its initial development. This ties into the broader discussion on how technical tools, like academic concepts, carry inherent worldviews and biases, 
+// as discussed during the course.
+
+// GENERAL SETTINGS FOR THE CHART
+// These settings adjust the chart to be responsive, allowing it to adapt to various devices, as users may access it from different screen sizes.
+
 const margin = {top: 20, right: 30, bottom: 30, left: 100};
 let width = parseInt(d3.select("#chart").style("width")) - margin.left - margin.right;
 let height = 600 - margin.top - margin.bottom;
 
-// Criar o SVG
+// CREATE THE SVG
+// D3 works with SVG (Scalable Vector Graphics), a web standard for rendering vector-based graphics that ensures visualizations can scale 
+// and be responsive across different devices. 
+// SVG was developed by the W3C (World Wide Web Consortium) and was introduced in 1999. Its primary purpose was to enable resolution-independent 
+// vector graphics on the web, ensuring that images and graphics could be displayed clearly on any screen size or resolution. 
+// This standard was a key milestone in web development, particularly for creating interactive and scalable graphics, which has become 
+// an essential feature for data visualizations on the web.
+
 const svg = d3.select("#chart")
     .append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -11,7 +37,12 @@ const svg = d3.select("#chart")
     .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-// Criar a div do Tooltip apenas uma vez fora do SVG
+// CREATE THE TOOLTIP
+// Tooltips provide additional context about the data when a user hovers over the chart elements. 
+// They became popular in web design as a way to offer users helpful, immediate information about the content they interact with, 
+// without cluttering the main view. 
+// In this case, the tooltip displays key information about each author, including their key contribution and geographical location.
+
 const tooltip = d3.select("body")
     .append("div")
     .style("opacity", 0)
@@ -21,46 +52,83 @@ const tooltip = d3.select("body")
     .style("padding", "8px")
     .style("border", "1px solid #d3d3d3")
     .style("border-radius", "4px")
-    .style("pointer-events", "none");  // Para evitar que o Tooltip interfira na interação
+    .style("pointer-events", "none");  // Prevents the tooltip from interfering with user interactions
 
-// Função para redimensionar o gráfico conforme a janela é ajustada
+// RESIZE FUNCTION: Adapting the graph to different screen sizes
+// This function ensures that the chart dynamically adjusts to fit various screen sizes, from desktops to small smartphones.
+// It's a problem that Alan Turing never had to deal with while working on computing and breaking German codes in the 1940s. 
+// Almost 84 years later, we now hold more processing power in our hands than ever imagined, and yet, we find ourselves 
+// having to worry about mundane things like responsive design lol.
+
 function resize() {
-    // Atualiza a largura e altura com base no tamanho da janela
+    // Update width and height based on window size
     width = parseInt(d3.select("#chart").style("width")) - margin.left - margin.right;
 
-    // Atualiza o SVG com a nova largura
+    // Update the SVG with the new width
     d3.select("svg")
         .attr("width", width + margin.left + margin.right);
 
-    // Atualiza as escalas X
+    // Update the X scales
     x.range([0, width]);
 
-    // Atualiza os eixos
+    // Update the axes
     svg.select(".x-axis").call(d3.axisBottom(x).tickFormat(d3.format("d")));
 
-    // Atualiza as posições dos círculos
+    // Update the circle positions
     svg.selectAll("circle")
         .attr("cx", d => jitter(x(d.startYear), 10));
 }
 
-// Carregar dados do Google Spreadsheet via CSV
+// LOAD DATA FROM GOOGLE SPREADSHEET VIA CSV
+// This dataset includes all the authors mentioned by both the professor and the students during three days of class in August 2024.
+// These references emerged in the context of discussions around AI and Machine Learning, with the aim of tracing the genealogy of the field.
+// The process of building this spreadsheet was directly connected to my note-taking system. I take structured notes during class, organizing them 
+// in a way that allows me to later extract meaningful data. This has been possible with the aid of modern AI-powered analysis tools that help make 
+// sense of unstructured information. The decision to store this data in a Google Spreadsheet and export it as a CSV (Comma-Separated Values) file 
+// was a conscious one. CSV files are simple data structures that are widely readable and easy to manipulate. They have a long history, dating back to the early 1970s. 
+// The format became popular as an easy way to represent tabular data, and it was widely adopted for data exchange between early software applications.
+// Being a text-based format, CSV files are lightweight, making them ideal for online sharing and integration with various tools.
+
+// By hosting the data in a Google Spreadsheet, the dataset remains dynamic and can be updated or corrected as needed, thanks to its cloud-based nature.
+// This allows for real-time updates in the visualization, ensuring that any new information or corrections are reflected instantly in the graph.
+
+// As for using a tool from Google to host the data, it’s worth pausing for a moment to reflect on the company's role as a giant in data processing.
+// Google began, 1998, as an ambitious project to index the world’s information, essentially becoming a modern-day librarian of the digital world.
+// The value of indexing and organizing data became apparent as the company collected search queries, user data, and web content, leading to the massive 
+// accumulation of data that we now know as "big data." For many years, it was not entirely clear how this data would be leveraged, but Google’s position 
+// as a data-centric company allowed it to profit immensely from understanding, categorizing, and making sense of the data it collected.
+// Now, we live in a time when data is one of the most valuable commodities, and companies like Google are creating tools and platforms that allow users like me 
+// to store and manage datasets in the cloud. 
+// It’s ironic in a way: Google has evolved from indexing websites to becoming the very infrastructure we rely on to create, store, and analyze new data.
+
 const googleSheetCSV = "https://docs.google.com/spreadsheets/d/1GrZpRGPTnwRBNhCDBusax9BpInPmfxkt6Y7HIGC_N-w/pub?gid=498870662&single=true&output=csv";
 
-// Variáveis globais
+// Global variables
 let selectedAuthors = [];
 let data = [];
 
-// Definir as escalas para os eixos
+// SET THE SCALES FOR THE AXES
+// While the graph spans the years from 1800 to 2024, there is an important distinction in how the time is represented.
+// Between 1800 and 1910, the timeline is not scaled accurately. This decision reflects a trade-off in data visualization: 
+// the need for a dynamic, engaging chart takes precedence over strict temporal accuracy for that earlier period.
+// This approach highlights the subjectivity inherent in data visualization. As the author, I opted to prioritize a 
+// clear visual representation of the more recent developments in AI (post-1900), where the timeline is fully linear and accurate.
+// This kind of decision-making reflects one of the key themes in data science and machine learning: 
+// that models, algorithms, and visualizations are not neutral — they are shaped by the decisions and biases of their creators.
+// Authors like John Tukey, a pioneer in data analysis, emphasized the importance of exploring data through visualization,
+// acknowledging that simplifying or transforming data is essential for finding patterns, even if it introduces inaccuracies.
+// Thus, this visualization makes a conscious choice to simplify the earlier years to focus on the more meaningful trends in the 20th and 21st centuries.
+
 const x = d3.scaleLinear()
-    .domain([1800, 2025])  // Definindo o range de anos, ajustando 1800 a 1900 sem escala correta
-    .range([0, width]);
+    .domain([1800, 1910, 2025])  // Define custom breakpoints in the timeline
+    .range([0, width * 0.1, width]);  // Allocate only 10% of the width for 1800-1900, and the rest for 1900-2025
 
 const y = d3.scaleBand()
     .domain(["Oceania", "Asia", "Europe Continental", "Europe UK", "Canada", "USA East", "USA West", "South America"])
     .range([0, height])
     .padding(1);
 
-// Adicionar os eixos
+// Add the axes
 const xAxis = svg.append("g")
     .attr("transform", `translate(0,${height})`)
     .attr("class", "x-axis")
@@ -70,7 +138,7 @@ const yAxis = svg.append("g")
     .attr("class", "y-axis")
     .call(d3.axisLeft(y));
 
-// Função para capturar os autores selecionados e destacar no gráfico
+// Function to capture selected authors and highlight them in the graph
 function updateSelectedAuthors(author1, author2) {
     selectedAuthors = [author1, author2];
     if (typeof updateChart === 'function') {
@@ -78,12 +146,27 @@ function updateSelectedAuthors(author1, author2) {
     }
 }
 
-// Função para gerar um valor de jitter (deslocamento) leve
+// FUNCTION TO GENERATE A SLIGHT JITTER VALUE
+
+// Since it was declared the X-axis was rescaled to better accommodate the data, the bubbles are also not placed precisely on the timeline.
+// This slight jitter prevents bubbles from overlapping, especially in densely populated years like the 1950s and 1990s, where many authors made key contributions. 
+// This was a deliberate choice to improve readability and avoid visual clutter. A kind of a degree of poetic license in the visualization.
 function jitter(value, range) {
-    return value + (Math.random() - 0.5) * range;  // Gera um deslocamento aleatório dentro do intervalo fornecido
+    return value + (Math.random() - 0.5) * range;  // Generates a random offset within the given range
 }
 
-// Função para atualizar o gráfico com os autores selecionados
+// FUNCTION TO RENDER THE CHART
+
+// This function renders the graph on the screen and is responsible for updating the visualization whenever authors are selected.
+// The colors pink (for female) and turquoise (for male) represent the gender of the authors. While I recognize that some authors 
+// may prefer non-binary pronouns or might not identify with these gender categories, I did not find consistent information on this.
+// So, for the sake of simplicity, I used male and female classifications. Also, before anyone gets upset, the pink color for female 
+// is not meant to reinforce any stereotypes. It's simply because pink and turquoise are the colors of my brand.
+
+// The size of each bubble reflects the duration of the author's research career. For instance, Noam Chomsky, who has been active 
+// for over 60 years, has a larger circle compared to others with shorter research spans. This gives an interesting visual insight 
+// into the consistency and longevity of many of these authors' engagements with topics related to AI and Machine Learning.
+
 function updateChart() {
     const size = d3.scaleSqrt()
         .domain([1, d3.max(data, d => d.duration)])
@@ -93,7 +176,7 @@ function updateChart() {
         .domain(["Male", "Female"])
         .range(["var(--turquoise)", "var(--pink)"]);
 
-    // Atualizar as bolhas
+    // Update the bubbles
     const circles = svg.selectAll("circle")
         .data(data)
         .join("circle")
@@ -120,8 +203,30 @@ function updateChart() {
             tooltip.transition().duration(200).style("opacity", 0);
         });
 }
+// LOAD THE DATA AND BUILD THE GRAPH
 
-// Carregar os dados e construir o gráfico
+// The dataset used here represents three days of lectures on Machine Learning and AI, during which authors were mentioned by the professor and students.
+// This dataset, however, is not a comprehensive or universal list of AI and ML contributors — it was selected and organized by me based on my notes,
+// and it’s possible that I missed some authors or added others that seemed relevant during the lectures. 
+// This introduces an initial layer of bias, rooted in my own perspective on what was discussed in class.
+
+// The visualization itself was built based on this dataset, and throughout the comments, I've made it clear where I made specific design decisions.
+// For instance, I chose to scale the timeline between 1800 and 1910 differently to better visualize the data, and I introduced slight randomness 
+// in the positioning of the bubbles to prevent overlap in densely populated periods, such as the 1950s and 1990s. 
+// I also found it relevant to include data on gender and research duration, which helped me explore the relationships between the authors in this context.
+
+// However, it’s important to acknowledge that this dataset already reflects a bias introduced by Chris Salter, the professor who selected the authors.
+// The graph clearly shows that the majority of authors are from North America, with some from Europe, but very few from regions like South America or Oceania.
+// None in Afrika. Even the representation of women in this field is limited, which reflects the broader reality of AI and ML as fields that have been developed largely 
+// in North America and Europe.
+
+// The visualization choices I've made, like separating the US into East and West coasts, were intended to explore potential differences in perspectives.
+// Ultimately, this graph is an attempt to find patterns in this small but meaningful dataset, much like what machine learning aims to do:
+// analyzing large datasets, identifying patterns, and making predictions based on those patterns. 
+// This visualization, while based on only a limited number of authors, allowed me to highlight key trends and insights within this specific academic context.
+// As I create this visualization to uncover patterns and insights, I’m learning—and so is the machine.
+// But in the end, the question remains: who is teaching ?
+
 d3.csv(googleSheetCSV).then(function(loadedData) {
     data = loadedData;
 
@@ -133,5 +238,5 @@ d3.csv(googleSheetCSV).then(function(loadedData) {
     updateChart();
 });
 
-// Redimensionar o gráfico quando a janela for redimensionada
+// Resize the chart when the window is resized
 window.addEventListener("resize", resize);
