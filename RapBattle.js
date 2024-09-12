@@ -98,7 +98,7 @@ function updateAuthorInfo() {
 
     // Atualiza o gráfico de bolhas com os autores selecionados
     if (typeof updateSelectedAuthors === 'function') {
-        updateSelectedAuthors(author1, author2);  // Função que atualiza o gráfico de bolhas
+        updateSelectedAuthors(author1, author2);  // Function that updates the bubble chart
     } else {
         console.error("Function updateSelectedAuthors is not defined");
     }
