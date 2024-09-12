@@ -54,7 +54,22 @@ function loadAuthors() {
         });
 }
 
-// Function to update selected authors' information
+// FUNCTION TO UPDATE AUTHOR INFO
+// One of the core educational ideas behind this project is the repetition of information through interaction.
+// Each time two authors are selected, the user is presented with a brief bio of each, along with their
+// notable contributions. This helps reinforce memory through repeated exposure—an essential aspect of learning. 
+
+// As the author of this project, I wanted to engage with the material in a playful but effective way.
+// By constantly returning to the authors and their key ideas, I create opportunities to solidify that
+// knowledge. The more I interact with the data, the more it becomes ingrained. It's like learning through
+// play: the process of comparing these authors, selecting them in pairs, and reading their bios repeatedly 
+// creates a deeper understanding of their role in AI and Machine Learning. The mini-bios act as bite-sized
+// pieces of information that are easier to digest and remember over time. 
+
+// In this way, the rap battle format isn't just about entertainment—it's also an educational tool that
+// promotes learning by encouraging users to actively engage with the content, fostering a stronger
+// connection to the material with each interaction.
+
 function updateAuthorInfo() {
     const author1 = document.getElementById('author1').value;
     const author2 = document.getElementById('author2').value;
@@ -106,7 +121,22 @@ document.getElementById('author1').addEventListener('change', updateAuthorInfoDe
 document.getElementById('author2').addEventListener('change', updateAuthorInfoDebounced);
 
 
-// Function to start the rap battle by generating a prompt and calling OpenAI API
+// FUNCTION TO START RAP BATTLE
+// Why a rap battle? The concept of a "rap battle" originates from the hip-hop culture in the 1970s
+// in the Bronx, New York, where two rappers would face off, each trying to outdo the other with
+// their lyrical prowess, wit, and rhythm. It’s a verbal duel that  not only showcases skill but also
+// adds an element of entertainment and competition. In this project, we bring this cultural concept
+// into an academic context, comparing authors in AI and Machine Learning as though they were
+// rappers in a lyrical battle. 
+
+// This humorous juxtaposition invites users to think of these intellectuals as contenders in the 'arena'
+// of ideas, where their contributions are like verses, each trying to 'outshine' the other in terms
+// of impact and innovation. The playful nature of the rap battle format makes the exploration of
+// academic figures feel less rigid and more approachable. By pitting authors against each other,
+// the user is encouraged to compare their contributions in a fun and engaging way—almost as if 
+// they were competing in the intellectual equivalent of a rap battle. After all, aren't AI and Machine
+// Learning just another form of  problem-solving and creativity, much like crafting the perfect rap verse?
+
 function startRapBattle() {
     const author1 = document.getElementById('author1').value;
     const author2 = document.getElementById('author2').value;
@@ -146,7 +176,39 @@ function startRapBattle() {
         Each part should be clearly labeled with the author's name before their verse.
     `;
     
-    // Call the OpenAI API
+    // OPENAI API CONTEXT
+    // The OpenAI API is used here to generate the rap battle lyrics between two selected authors. 
+    // OpenAI was founded in 2015 as an open-source AI research company, with the goal of
+    // making artificial intelligence accessible. While it started as an open-source initiative,
+    // OpenAI has since shifted its model and is now a capped-profit organization, with investors
+    // like Microsoft holding a significant stake in the company. OpenAI is based in the United States,
+    // and its work reflects the influence and values of the tech industry in that region, which brings
+    // with it certain biases and perspectives, just like the authors discussed in this project.
+
+    // The tool itself is built on advanced technologies like Deep Learning, specifically large language 
+    // models (LLMs) and Natural Language Processing (NLP). These models are trained on vast
+    // amounts of text data, which allows them to understand and generate human-like responses. 
+    // In this case, the API is used to simulate a rap battle by drawing on a massive corpus of text, including
+    // examples of lyrical structures. The API tries to find patterns in language and mimic the format
+    // of a battle, but this process is heavily dependent on the data it was trained on — data 
+    // which is not fully accessible or transparent to me as the user.
+
+    // This is where the OpenAI API differs from something like D3.js. While D3.js is based on SVG
+    // and is a fully open-source library, allowing me full control over how data is rendered and visualized,
+    // OpenAI operates more like a black box. I don’t have access to the dataset that was used to 
+    // train the model, nor can I tweak the underlying patterns it has learned. This introduces an element
+    // of uncertainty — while I can control the inputs to the model (the authors selected for the battle),
+    // I am trusting OpenAI’s bias in generating the output. This is a significant contrast to my data
+    // visualization work, where I had full control and made my biases clear in the dataset and
+    // visualization process.
+
+    // By using the OpenAI API, I am essentially relying on an external system that has been trained
+    // on a dataset I did not curate and a model I did not design. This highlights an important point about
+    // machine learning tools: much of their power comes from pattern recognition, but the user has limited 
+    // insight into the biases inherent in the model. The rap battle, while humorous and creative, is ultimately
+    // generated by a tool trained on data whose origins and biases are unknown to me, unlike the bias
+    // I can clearly see and control in my dataset of AI authors.
+
     fetch('/api/openai', {
         method: 'POST',
         headers: {
