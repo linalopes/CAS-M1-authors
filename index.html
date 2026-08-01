@@ -11,12 +11,22 @@
 </head>
 
 <body>
-    <header>
-        <h1 class="py-4">Authors Rap Battle</h1>
+    <header class="py-4">
+        <h1>Authors Rap Battle</h1>
+        <p class="masthead-byline">Lina Lopes · CAS AI for Creative Practices · August 2024</p>
     </header>
 
     <!-- Motivation Section -->
     <section class="pt-4 col-md-8 col-sm-12 mx-auto pb-4">
+        <div class="section-header">
+            <span class="section-header__number">01</span>
+            <div class="section-header__right">
+                <span class="section-header__label">MOTIVATION</span>
+                <h2 class="section-header__title">Why a Rap Battle</h2>
+                <div class="section-header__accent"></div>
+            </div>
+        </div>
+
         <p>
             This page showcases a unique "rap battle" between authors, inspired by the references gathered during the
             Module 1 of the <strong>Certificate for Advanced Studies in AI for Creative Practices</strong>, taught by
@@ -27,32 +37,52 @@
             This course explored the genealogies of AI, covering how the field began and what Artificial Intelligence
             and Machine Learning mean today. From their symbolic roots in the 20th century to modern applications in the
             21st century, this page is a playful exploration of the ideas and personalities that shaped AI and Machine
-            Learning. The authors mentioned fall into three major AI categories: Symbolic AI, Connectionist AI, and a
-            third area Enactive AI, which studies the "embodiment" of AI with human cognition and the environment.
+            Learning. The authors mentioned fall into three major AI categories, explored throughout this piece:
         </p>
+        <div class="category-badges">
+            <span class="badge">Symbolic AI</span>
+            <span class="badge">Connectionist AI</span>
+            <span class="badge">Enactive AI</span>
+        </div>
         <p>
             My role in this was to compile a comprehensive list of references mentioned throughout the course and
             categorize them based on their theoretical contexts. This rap battle is an interactive way to engage with
             their contributions.
         </p>
         <p>
-            I'm <a href="https://www.linalopes.info/" target="_blank">Lina Lopes</a>, a student of this Certificate
-            program, and this project is an artistic exploration of the intersections between AI and human creativity. I
-            hope you enjoy!
+            I'm <a href="https://www.linalopes.info/" target="_blank" rel="noopener" class="link-highlight">Lina Lopes</a>,
+            a student of this Certificate program, and this project is an artistic exploration of the intersections
+            between AI and human creativity. I hope you enjoy!
+        </p>
+        <p>
+            <a class="button button--accent"
+                href="essay/Rap%20Battle%20-%20Battlin%E2%80%99%20Bias%20with%20Bubbles%20and%20Beats.pdf"
+                target="_blank" rel="noopener">↓ Read the full paper (PDF)</a>
         </p>
     </section>
 
     <!-- Dropdowns for Author Selection -->
     <section>
         <div class="container">
+            <div class="section-header">
+                <span class="section-header__number">02</span>
+                <div class="section-header__right">
+                    <span class="section-header__label">THE BATTLE</span>
+                    <h2 class="section-header__title">Choose Your Authors</h2>
+                    <div class="section-header__accent"></div>
+                </div>
+            </div>
+
             <div class="row">
                 <!-- Coluna do Autor 1 -->
                 <div class="col-md-6">
                     <div class="form-group">
                         <h5>Choose Author 1:</h5>
-                        <select id="author1" class="form-control" aria-label="Choose Author 1">
+                        <input id="author1" class="form-control" list="author1-options" autocomplete="off"
+                            placeholder="Loading authors…" disabled aria-label="Choose Author 1">
+                        <datalist id="author1-options">
                             <!-- Options will be populated by JavaScript -->
-                        </select>
+                        </datalist>
                     </div>
                     <div class="author-info">
                         <p id="author1-bio">Select an author to see their bio.</p>
@@ -63,9 +93,11 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <h5>Choose Author 2:</h5>
-                        <select id="author2" class="form-control" aria-label="Choose Author 2">
+                        <input id="author2" class="form-control" list="author2-options" autocomplete="off"
+                            placeholder="Loading authors…" disabled aria-label="Choose Author 2">
+                        <datalist id="author2-options">
                             <!-- Options will be populated by JavaScript -->
-                        </select>
+                        </datalist>
                     </div>
                     <div class="author-info">
                         <p id="author2-bio">Select an author to see their bio.</p>
@@ -76,7 +108,7 @@
             <!-- Button to start battle -->
             <div class="row mt-4">
                 <div class="col text-center">
-                    <button id="battleButton" class="button"
+                    <button id="battleButton" class="button button--primary"
                         aria-label="Start the rap battle between selected authors">Start Rap Battle</button>
                 </div>
             </div>
@@ -92,14 +124,25 @@
 
     <!-- Bubble Graph of the Authors -->
     <section id="bubbleChart" class="pt-4 col-12">
-        <p>If you are using your phone, turn it 90 degrees to better visualize the chart</p>
+        <div class="section-header">
+            <span class="section-header__number">03</span>
+            <div class="section-header__right">
+                <span class="section-header__label">THE LANDSCAPE</span>
+                <h2 class="section-header__title">Seventy-Four Authors, One Timeline</h2>
+                <div class="section-header__accent"></div>
+            </div>
+        </div>
+        <p class="chart-scroll-hint">On small screens, scroll sideways to see the full timeline</p>
         <p>The size of the circles are related with the amount of the years of the author dedicated to the research</p>
-        <div id="chart"></div>
+        <div class="chart-scroll-wrapper">
+            <div id="chart"></div>
+        </div>
     </section>
 
     <!-- Include d3.js script for dataviz -->
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <script src="https://d3js.org/d3-fetch.v1.min.js"></script> <!-- To load CSV -->
+    <script src="data.js"></script>
     <script src="DataViz.js"></script>
     <script src="RapBattle.js"></script>
 </body>

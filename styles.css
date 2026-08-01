@@ -1,19 +1,48 @@
 /* Import fonts from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@100..900&family=Space+Grotesk:wght@300..700&display=swap');
 
-/* Define the Branding colors and spacing system */
+/* Define the Branding colors and spacing system
+   Source of truth: https://linalopes.github.io/SchoolAI-brand-kit/ */
 :root {
+    /* Physical brand colors — keep these names, DataViz.js references
+       var(--turquoise)/var(--pink) directly in its D3 color scale. */
     --deep-purple: #22113E;
     --gray-green: #CAD8D8;
     --pink: #EA7DFF;
     --turquoise: #08F2DB;
 
-    /* Spacing system */
+    /* Semantic layer, per the brand kit */
+    --color-bg: #FFFFFF;
+    --color-text-muted: #888888;
+    --border-color: rgba(34, 17, 62, 0.14);
+    --border-width: 1px;
+
+    /* Fonts */
+    --font-title: 'Space Grotesk', sans-serif;
+    --font-text: 'Inter', sans-serif;
+    --font-mono: 'Courier Prime', monospace;
+
+    /* Type scale, per the brand kit */
+    --h1-size: 64px; --h1-line: 1.05; --h1-letter: -0.02em; --h1-weight: 300;
+    --h2-size: 40px; --h2-line: 1.10; --h2-letter: -0.01em; --h2-weight: 300;
+
+    /* Legacy spacing system (still used by the .p-*/.py-*/.pt-*/.pb-* utility classes) */
     --space-xs: 0.5rem;  /* Small space */
     --space-sm: 1rem;    /* Medium space */
     --space-md: 2rem;    /* Large space */
     --space-lg: 3rem;    /* Extra-large space */
     --space-xl: 4rem;    /* Extra-extra-large space */
+
+    /* Brand kit spacing scale, used by the new editorial components below */
+    --space-1: 6px;
+    --space-2: 10px;
+    --space-3: 16px;
+    --space-4: 24px;
+    --space-5: 36px;
+    --space-6: 52px;
+
+    /* Shape */
+    --radius: 4px;
 
     /* Font sizes */
     --font-size-base: 1rem;
@@ -22,29 +51,33 @@
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-text);
     font-weight: 300;
     font-size: var(--font-size-base);
     color: var(--deep-purple);
-    text-align: center;
     margin: var(--space-md);
 }
 
 h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 300;
+    font-family: var(--font-title);
+    font-size: var(--h1-size);
+    line-height: var(--h1-line);
+    letter-spacing: var(--h1-letter);
+    font-weight: var(--h1-weight);
     margin-bottom: var(--space-sm);
 }
 
 h2 {
-    font-family: 'Courier Prime', monospace;
-    font-weight: 400;
-    font-size: var(--font-size-xlarge);
-    margin-bottom: var(--space-xs);
+    font-family: var(--font-title);
+    font-size: var(--h2-size);
+    line-height: var(--h2-line);
+    letter-spacing: var(--h2-letter);
+    font-weight: var(--h2-weight);
+    margin: 0 0 var(--space-xs);
 }
 
 h3 {
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-text);
     font-weight: 400;
     font-size: var(--font-size-large);
     margin-bottom: var(--space-sm);
@@ -59,13 +92,17 @@ p, ul, li, ol {
     max-width: 800px;
 }
 
-a { 
-    color: var(--pink);
-    transition: color 0.3s;
+/* Links stay Deep Purple (the brand kit's own contrast table fails Pink on
+   White at 1.97:1); the colored underline carries the brand accent instead. */
+a {
+    color: var(--deep-purple);
+    text-decoration-color: var(--pink);
+    transition: color 0.3s, text-decoration-color 0.3s;
 }
 
 a:hover {
-    color: var(--turquoise);
+    color: var(--deep-purple);
+    text-decoration-color: var(--turquoise);
 }
 
 div {
@@ -87,6 +124,150 @@ button:hover {
     background-color: var(--turquoise);
     color: var(--deep-purple);
     transform: scale(1.05);
+}
+
+/* ==========================================================
+   Editorial components (SchoolAI Brand Kit)
+   ========================================================== */
+
+/* Masthead byline / dateline, under the h1 */
+.masthead-byline {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    text-align: center;
+    margin: 0 0 var(--space-md);
+}
+
+/* Numbered section header: "01  MOTIVATION / Why a Rap Battle" */
+.section-header {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+    max-width: 800px;
+    margin: 0 auto var(--space-4);
+}
+
+.section-header__number {
+    font-family: var(--font-title);
+    font-size: 64px;
+    font-weight: 300;
+    color: var(--gray-green);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    flex-shrink: 0;
+}
+
+.section-header__right {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-bottom: 6px;
+}
+
+.section-header__label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--color-text-muted);
+}
+
+.section-header__title {
+    font-family: var(--font-title);
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--deep-purple);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.section-header__accent {
+    width: 24px;
+    height: 2px;
+    background: var(--pink);
+    margin-top: 6px;
+}
+
+/* Category tags ("Symbolic AI", "Connectionist AI", "Enactive AI") */
+.category-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    max-width: 800px;
+    margin: 0 auto var(--space-sm);
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius);
+    border: var(--border-width) solid rgba(34, 17, 62, 0.16);
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--deep-purple);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+}
+
+/* Buttons as filled surfaces (unlike link text, always Deep Purple on a
+   Pink/Turquoise surface — both AAA-approved pairs in the brand kit). */
+.button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius);
+    border: var(--border-width) solid rgba(34, 17, 62, 0.18);
+    background: var(--color-bg);
+    color: var(--deep-purple);
+    font-family: var(--font-text);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.button:hover {
+    transform: scale(1.03);
+}
+
+.button--primary {
+    background: var(--pink);
+    border-color: rgba(34, 17, 62, 0.10);
+}
+
+.button--primary:hover {
+    background: var(--turquoise);
+}
+
+.button--accent {
+    background: var(--turquoise);
+    border-color: rgba(34, 17, 62, 0.10);
+}
+
+.button--accent:hover {
+    background: var(--pink);
+}
+
+/* Highlight treatment for the "Lina Lopes" byline link — Deep Purple text
+   is already the body color, so a plain-colored link would disappear into
+   the paragraph. A Pink pill makes it stand out while staying an
+   AAA-approved pair (Deep Purple on Pink, 8.6:1). */
+.link-highlight {
+    color: var(--deep-purple);
+    background-color: var(--pink);
+    padding: 0 0.3em;
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.link-highlight:hover {
+    background-color: var(--turquoise);
 }
 
 #rapBattleResult {
@@ -126,7 +307,7 @@ button:hover {
 
 /* Font-size classes */
 .fs-1 {
-    font-size: 1rem; 
+    font-size: 1rem;
 }
 
 .fs-2 {
@@ -303,6 +484,20 @@ button:hover {
     padding-top: var(--space-md) !important;
 }
 
+/* Bubble chart: scroll horizontally instead of squeezing onto narrow screens */
+.chart-scroll-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#chart {
+    min-width: 800px;
+}
+
+.chart-scroll-hint {
+    display: none;
+}
+
 /* Consistent media queries for small devices */
 @media (max-width: 768px) {
     body {
@@ -315,5 +510,9 @@ button:hover {
 
     #rapBattleResult {
         font-size: var(--font-size-base);
+    }
+
+    .chart-scroll-hint {
+        display: block;
     }
 }

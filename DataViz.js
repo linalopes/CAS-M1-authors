@@ -114,7 +114,7 @@ function resize() {
 // to store and manage datasets in the cloud. It’s ironic in a way: Google has evolved from indexing
 // websites to becoming the very infrastructure we rely on to create, store, and analyze new data.
 
-const googleSheetCSV = "https://docs.google.com/spreadsheets/d/1GrZpRGPTnwRBNhCDBusax9BpInPmfxkt6Y7HIGC_N-w/pub?gid=498870662&single=true&output=csv";
+// The CSV URL and fetch itself now live in data.js, shared with RapBattle.js.
 
 // Global variables
 let selectedAuthors = [];
@@ -264,7 +264,7 @@ function updateChart() {
 // and insights, I’m learning — and so is the machine.
 // But in the end, the question bubbles up: who is teaching ?
 
-d3.csv(googleSheetCSV).then(function(loadedData) {
+loadAuthorsData().then(function(loadedData) {
     data = loadedData;
 
     data.forEach(function(d) {
@@ -273,6 +273,11 @@ d3.csv(googleSheetCSV).then(function(loadedData) {
     });
 
     updateChart();
+}).catch(function(error) {
+    console.error('Error loading chart data:', error);
+    d3.select("#chart").append("p")
+        .style("color", "red")
+        .text("Failed to load chart data. Please try again later.");
 });
 
 // Resize the chart when the window is resized

@@ -1,49 +1,52 @@
-// Function to load the CSV file and populate the dropdowns
+// Function to load the CSV file and populate the author search inputs
 let authorData = {};
 
-function loadAuthors() {
-    const googleSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQqCdcwLemmOhO16KOVWabBRabqQoRwx1QqIyS0mxZWq_O5dxYALM4JrZDu_LUoulbRQS6137gCsmJc/pub?gid=498870662&single=true&output=csv';
+function setAuthorInputsLoading(isLoading, failed = false) {
+    ['author1', 'author2'].forEach(id => {
+        const input = document.getElementById(id);
+        input.disabled = isLoading || failed;
+        input.placeholder = failed
+            ? 'Author list unavailable'
+            : (isLoading ? 'Loading authors…' : 'Type or select an author…');
+    });
+}
 
-    fetch(googleSpreadsheetUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok: ' + response.statusText);
-            }
-            return response.text();
-        })
-        .then(data => {
-            const rows = data.split('\n').slice(1);  // Skip the header row
-            const author1Select = document.getElementById('author1');
-            const author2Select = document.getElementById('author2');
+function loadAuthors() {
+    setAuthorInputsLoading(true);
+
+    // Shared with the bubble chart via data.js: one fetch, parsed by column
+    // name with d3.csv instead of a hand-rolled regex split.
+    loadAuthorsData()
+        .then(rows => {
+            const author1Options = document.getElementById('author1-options');
+            const author2Options = document.getElementById('author2-options');
 
             rows.forEach(row => {
-                const columns = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);  // Split row respecting commas inside quotes
-                const author = columns[0]?.trim();  // First column: Author name
-                const notableWork = columns[1]?.trim();  // Second column: Notable Work
-                const miniBio = columns[9]?.trim();  // Tenth column: Mini Bio
+                const author = row.author?.trim();
 
                 if (author) {
                     // Store the data in a dictionary
                     authorData[author] = {
-                        notableWork: notableWork || "No notable work available",
-                        miniBio: miniBio || "No bio available"
+                        notableWork: row['Notable Work']?.trim() || "No notable work available",
+                        miniBio: row['mini bio']?.trim() || "No bio available"
                     };
 
-                    // Add options to both select elements
+                    // Add options to both datalists backing the search inputs
                     let option1 = document.createElement('option');
-                    option1.text = author;
                     option1.value = author;
-                    author1Select.add(option1);
+                    author1Options.appendChild(option1);
 
                     let option2 = document.createElement('option');
-                    option2.text = author;
                     option2.value = author;
-                    author2Select.add(option2);
+                    author2Options.appendChild(option2);
                 }
             });
+
+            setAuthorInputsLoading(false);
         })
         .catch(error => {
             console.error('Error loading authors:', error);
+            setAuthorInputsLoading(false, true);
             const resultDiv = document.getElementById('rapBattleResult');
             resultDiv.innerHTML = `
                 <p style="color: red;">
@@ -116,9 +119,10 @@ function debounce(func, wait) {
 // Update author info with a debounce to optimize performance
 const updateAuthorInfoDebounced = debounce(updateAuthorInfo, 300);
 
-// Add event listener to update bios when an author is selected with debounce
-document.getElementById('author1').addEventListener('change', updateAuthorInfoDebounced);
-document.getElementById('author2').addEventListener('change', updateAuthorInfoDebounced);
+// Listen on 'input' (not 'change') so the bio updates as soon as a keystroke
+// completes a valid author name, not only after the field loses focus.
+document.getElementById('author1').addEventListener('input', updateAuthorInfoDebounced);
+document.getElementById('author2').addEventListener('input', updateAuthorInfoDebounced);
 
 
 // FUNCTION TO START RAP BATTLE
@@ -145,17 +149,18 @@ function startRapBattle() {
     // Clear previous error messages
     resultDiv.innerHTML = '';
 
-    // Input validation
-    if (!author1 || !author2) {
-        resultDiv.innerHTML = '<p style="color: red;">Please select both authors before starting the battle.</p>';
-        
-        // Add focus to the first empty field
-        if (!author1) {
+    // Input validation — with a free-text search field, the value can be
+    // non-empty without matching a real author, so check authorData too.
+    if (!author1 || !authorData[author1] || !author2 || !authorData[author2]) {
+        resultDiv.innerHTML = '<p style="color: red;">Please choose both authors from the suggestions before starting the battle.</p>';
+
+        // Add focus to the first invalid field
+        if (!author1 || !authorData[author1]) {
             document.getElementById('author1').focus();
-        } else if (!author2) {
+        } else {
             document.getElementById('author2').focus();
         }
-        
+
         return; // Stop the function from proceeding further
     }
 
@@ -235,10 +240,6 @@ function startRapBattle() {
         resultDiv.textContent = 'An error occurred. Please try again later.';
     });
 }
-
-// Add event listener to update bios when an author is selected
-document.getElementById('author1').addEventListener('change', updateAuthorInfo);
-document.getElementById('author2').addEventListener('change', updateAuthorInfo);
 
 // Add event listener to start rap battle when button is clicked
 document.getElementById('battleButton').addEventListener('click', startRapBattle);
